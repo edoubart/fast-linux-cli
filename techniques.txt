@@ -1,0 +1,124 @@
+=== List files and browse command line output with ease ===
+
+1. Use ls -ltr (list, time, reverse) to view last edited files
+
+2. Uses less -S to scroll or search command line output
+
+=> ls -ltr | less -S
+
+3. Use the tab key to complete partially written commands
+
+=== Re-using previous commands ===
+
+1. Use the up-key to retrieve previous commands
+
+2. Use Reverse-Interactive search (Ctrl+R) to retrieve previous commands
+
+3. Retrieve previous commands Using the history command
+
+Appendix a. Increase the command history size:
+
+Edit .bashrc
+
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+source .bashrc
+
+=== Repeat the same command for many files or lines with xargs and for loops ===
+
+1. Execute command for each output of another command using xargs
+
+ls *.txt | xargs cat
+
+2. Looping over multiple files with for-loops
+
+for file in $(ls *.txt); do echo ""; echo "------ $file ------"; echo ""; cat $file;  done;
+
+=== Use shortcuts to quickly navigate previous commands ===
+
+1. Use Ctrl to jump between words
+
+2. Use HOME and END to quickly jump to the start or end of the command
+
+=== Aliases & Functions ===
+
+Aliases: Save a command as an alias
+
+ls -ltr
+
+alias l='ls -ltr'
+
+=> l
+
+Functions: Take parameters, and do potentially complex things
+
+list() { ls -ltr; }
+
+=> list
+
+list() { ls -ltr $1; }
+
+=> list /
+
+=== Bootstrapping: create an alias to add aliases ===
+
+Creating an alias that:
+1. Opens the correct file
+2. Jumps to the end of the file
+3. Re-loads ('sources') the file after saving
+
+Create .bash_aliases
+Edit .bash_aliases
+
+alias l='ls -ltr'
+
+source .bash_aliases
+
+=> l
+
+Edit .bash_aliases
+
+alias ea='vim -/.bash_aliases; source -/.bash_aliases;'
+
+source .bash_aliases
+
+=> ea
+
+alias listcurrentfolder='ls'
+
+=> listcurrentfolder
+
+=> ea
+
+alias ea='vim +1000 -/.bash_aliases; source -/.bash_aliases;'
+
+=> ea
+
+listrootfolder() {
+  echo "Listing the root folder ...";
+  echo "";
+  ls /;
+}
+
+=> listrootfolder
+
+=== Finding out which commands are most often used ===
+
+Commands used:
+- history
+- cut /awk
+- sort
+- uniq
+
+history | cut -c 8-1000 | sort | uniq -c
+
+history | cut -c 8-1000 | sort | uniq -n
+
+=> ea
+
+alias commoncommands='history | cut -c 8-1000 | sort | uniq -n'
+
+=== Useful aliases functions ===
+
+See https://github.com/samuell/rc/blob/master/.bash_aliases
